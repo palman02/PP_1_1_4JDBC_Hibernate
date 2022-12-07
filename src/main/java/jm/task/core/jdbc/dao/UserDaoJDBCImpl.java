@@ -2,7 +2,6 @@ package jm.task.core.jdbc.dao;
 
 import jm.task.core.jdbc.model.User;
 import jm.task.core.jdbc.util.Util;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,8 +16,7 @@ public class UserDaoJDBCImpl implements UserDao {
     public void createUsersTable() {
         try {
             Statement statement = connection.createStatement();
-            String SQL = "create table if not exists User (id bigint primary key auto_increment, name varchar(50), lastname varchar(50), age tinyint);";
-            statement.execute(SQL);
+            statement.execute("create table if not exists User (id bigint primary key auto_increment, name varchar(50), lastname varchar(50), age tinyint);");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -27,8 +25,7 @@ public class UserDaoJDBCImpl implements UserDao {
     public void dropUsersTable() {
         try {
             Statement statement = connection.createStatement();
-            String SQL = "drop table if exists User;";
-            statement.execute(SQL);
+            statement.execute("drop table if exists User;");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -62,8 +59,7 @@ public class UserDaoJDBCImpl implements UserDao {
         List<User> users = new ArrayList<>();
         try {
             Statement statement = connection.createStatement();
-            String SQL = "select * from user";
-            ResultSet resultSet = statement.executeQuery(SQL);
+            ResultSet resultSet = statement.executeQuery("select * from user");
             while (resultSet.next()) {
                 User transientUser = new User();
                 transientUser.setId(resultSet.getLong("id"));
@@ -81,11 +77,9 @@ public class UserDaoJDBCImpl implements UserDao {
     public void cleanUsersTable() {
         try {
             Statement statement = connection.createStatement();
-            String SQL = "delete from user";
-            statement.execute(SQL);
+            statement.execute("delete from user");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
     }
 }

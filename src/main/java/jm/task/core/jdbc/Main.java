@@ -1,23 +1,17 @@
 package jm.task.core.jdbc;
 
-import jm.task.core.jdbc.dao.UserDaoJDBCImpl;
 import jm.task.core.jdbc.model.User;
-import jm.task.core.jdbc.util.Util;
-
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.Statement;
+import jm.task.core.jdbc.service.UserService;
+import jm.task.core.jdbc.service.UserServiceImpl;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
 
-    private static final Connection connection = Util.getConnection();
+    private final static UserService userService = new UserServiceImpl();
 
     public static void main(String[] args) {
-        UserDaoJDBCImpl userDaoJDBC = new UserDaoJDBCImpl();
-        userDaoJDBC.createUsersTable();
+        userService.createUsersTable();
         List<User> users = new ArrayList<>();
         User user1 = new User("Mikhail", "Shatov", (byte) 21);
         User user2 = new User("Max", "Tret", (byte) 19);
@@ -29,17 +23,17 @@ public class Main {
         users.add(user3);
         users.add(user4);
 
-        userDaoJDBC.createUsersTable(); //Создание табл
+        userService.createUsersTable(); //Создание табл
 
         for (User user: users) { //Сохранение юзеров в табл
-            userDaoJDBC.saveUser(user.getName(), user.getLastName(), user.getAge());
+            userService.saveUser(user.getName(), user.getLastName(), user.getAge());
             System.out.println(user);
         }
 
-        System.out.println(userDaoJDBC.getAllUsers());
+        System.out.println(userService.getAllUsers());
 
-        userDaoJDBC.cleanUsersTable();
-        userDaoJDBC.dropUsersTable();
+        userService.cleanUsersTable();
+        userService.dropUsersTable();
 
 
 
