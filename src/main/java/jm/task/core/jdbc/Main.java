@@ -26,7 +26,7 @@ public class Main {
 
         userService.createUsersTable();
         users.forEach(user -> userService.saveUser(user.getName(), user.getLastName(), user.getAge()));
-        userService.removeUserById(1);
+        userService.removeUserById(2);
         System.out.println(userService.getAllUsers());
         userService.cleanUsersTable();
         userService.dropUsersTable();

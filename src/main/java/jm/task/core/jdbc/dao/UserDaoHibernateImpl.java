@@ -4,7 +4,6 @@ import jm.task.core.jdbc.model.User;
 import jm.task.core.jdbc.util.Util;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.query.Query;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,8 +18,7 @@ public class UserDaoHibernateImpl implements UserDao {
     public void createUsersTable() {
         try (Session session = sessionFactory.getCurrentSession()){
             session.beginTransaction();
-            Query query = session.createSQLQuery("create table if not exists User (id bigint primary key auto_increment, name varchar(50), lastname varchar(50), age tinyint);");
-            query.executeUpdate();
+            session.createSQLQuery("create table if not exists User (id bigint primary key auto_increment, name varchar(50), lastname varchar(50), age tinyint);").executeUpdate();
             session.getTransaction().commit();
         }
     }
@@ -29,8 +27,7 @@ public class UserDaoHibernateImpl implements UserDao {
     public void dropUsersTable() {
         try (Session session = sessionFactory.getCurrentSession()){
             session.beginTransaction();
-            Query query = session.createSQLQuery("drop table if exists User");
-            query.executeUpdate();
+            session.createSQLQuery("drop table if exists User").executeUpdate();
             session.getTransaction().commit();
         }
     }
@@ -60,8 +57,7 @@ public class UserDaoHibernateImpl implements UserDao {
         List<User> users = new ArrayList<>();
         try (Session session = sessionFactory.getCurrentSession()){
             session.beginTransaction();
-            Query query = session.createQuery("from User");
-            users = query.getResultList();
+            users = session.createQuery("from User").getResultList();
             session.getTransaction().commit();
         }
         return users;
